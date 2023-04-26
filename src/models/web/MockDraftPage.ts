@@ -1,17 +1,13 @@
 import axios from 'axios';
 import { parse, HTMLElement } from 'node-html-parser';
-
-export interface MockDraftPageItem {
-  endpoint: string;
-  date: Date;
-}
+import { MockDraft } from './MockDraft';
 
 export class MockDraftPage {
-  private data: MockDraftPageItem[] = [];
+  private data: MockDraft[] = [];
 
   constructor(public endpoint: string) {}
 
-  public getData(): MockDraftPageItem[] {
+  public getData(): MockDraft[] {
     return this.data;
   }
 
@@ -20,25 +16,31 @@ export class MockDraftPage {
     this.data = this.parsePage(response.data);
   }
 
-  private parsePage(content: string): MockDraftPageItem[] {
-    function parseListItem(head: HTMLElement): MockDraftPageItem | null {
+  public async loadChildren(): Promise<void> {
+    if (!this.data) return;
+    let promises: Promise<void>[] = [];
+    this.data.forEach((mockDraft) => {
+      promises.push(mockDraft.load());
+    });
+    await Promise.all(promises);
+  }
+
+  private parsePage(content: string): MockDraft[] {
+    function parseListItem(head: HTMLElement): MockDraft | null {
       let link = head.querySelector('.link-container')?.getAttribute('href');
       let siteTimestamp = head.querySelector('.site-timestamp')?.innerText;
       if (siteTimestamp && link) {
         let splitTimestamp = siteTimestamp.split('/');
         splitTimestamp[2] = `20${splitTimestamp[2]}`;
         let modifiedTimestamp = splitTimestamp.join('/');
-        return {
-          endpoint: link,
-          date: new Date(modifiedTimestamp),
-        };
+        return new MockDraft(link, new Date(modifiedTimestamp));
       }
       return null;
     }
 
     const list = parse(content).querySelector('.mocks-list');
     if (list) {
-      let out: MockDraftPageItem[] = [];
+      let out: MockDraft[] = [];
       list.querySelectorAll('li').forEach((listItem: HTMLElement) => {
         let parseResult = parseListItem(listItem);
         if (parseResult) out.push(parseResult);

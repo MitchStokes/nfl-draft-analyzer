@@ -1,6 +1,6 @@
-import { Constants } from './Constants';
-import { MockDraft } from './models/MockDraft';
-import { MockDraftPage } from './models/MockDraftPage';
+import { Constants } from './util/Constants';
+import { MockDraft } from './models/web/MockDraft';
+import { MockDraftPage } from './models/web/MockDraftPage';
 
 async function main(): Promise<void> {
   /* let test = new MockDraft(
@@ -13,8 +13,10 @@ async function main(): Promise<void> {
   test.ppData(); */
   let test = new MockDraftPage(Constants.buildUrl('/page/1'));
   await test.load();
-  console.log(test.getData());
-  console.log(test.getData().length);
+  await test.loadChildren();
+  test.getData().forEach((mockDraft) => {
+    mockDraft.pp();
+  });
 }
 
 main();

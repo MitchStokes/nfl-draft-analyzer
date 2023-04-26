@@ -1,24 +1,25 @@
 import axios from 'axios';
 import { parse } from 'node-html-parser';
+import { Constants } from '../../util/Constants';
 
 export class MockDraft {
   private data: string[] = [];
 
-  constructor(public endpoint: string) {}
+  constructor(public endpoint: string, public date: Date) {}
 
   public getData(): string[] {
     return this.data;
   }
 
-  // "Pretty prints" (pp) the data in a nicer format
-  public ppData(): void {
+  // "Pretty prints" the MockDraft
+  public pp(): void {
     this.data.forEach((element, idx) => {
-      console.log(`${idx}: ${element}`);
+      console.log(`${idx + 1}: ${element}`);
     });
   }
 
   public async load(): Promise<void> {
-    let response = await axios.get(this.endpoint);
+    let response = await axios.get(Constants.buildUrl(this.endpoint));
     this.data = this.parsePage(response.data);
   }
 

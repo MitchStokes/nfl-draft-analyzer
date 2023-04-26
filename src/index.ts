@@ -1,13 +1,20 @@
+import { Constants } from './Constants';
 import { MockDraft } from './models/MockDraft';
-import { PuppeteerController } from './util/PuppeteerController';
+import { MockDraftPage } from './models/MockDraftPage';
 
 async function main(): Promise<void> {
-  let puppeteer = new PuppeteerController();
-  await puppeteer.init();
-  let content = await puppeteer.getPageContent(
-    'https://www.nflmockdraftdatabase.com/mock-drafts/2023/tankathon-2023?date=2023-04-25'
+  /* let test = new MockDraft(
+    Constants.buildUrl(
+      '/mock-drafts/2023/heavy-2023-matt-lombardo?date=2023-04-26'
+    )
   );
-  console.log(content);
+  await test.load();
+  console.log(test.getData());
+  test.ppData(); */
+  let test = new MockDraftPage(Constants.buildUrl('/page/1'));
+  await test.load();
+  console.log(test.getData());
+  console.log(test.getData().length);
 }
 
 main();

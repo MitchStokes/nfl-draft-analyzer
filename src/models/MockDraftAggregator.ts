@@ -1,6 +1,6 @@
-import { Constants } from '../../util/Constants';
-import { FileInput } from '../io/FileInput';
-import { FileOutput } from '../io/FileOutput';
+import { Constants } from '../util/Constants';
+import { FileInput } from './FileInput';
+import { FileOutput } from './FileOutput';
 import { MockDraft } from './MockDraft';
 import { MockDraftPage } from './MockDraftPage';
 
@@ -11,7 +11,7 @@ type JSONMockDraft = {
   data: string[];
 };
 
-export class MockDraftPageAggregator {
+export class MockDraftAggregator {
   private mockDrafts: MockDraft[] = [];
 
   constructor() {}

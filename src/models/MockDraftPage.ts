@@ -7,7 +7,7 @@ export class MockDraftPage {
 
   constructor(public endpoint: string) {}
 
-  public getData(): MockDraft[] {
+  public getMockDrafts(): MockDraft[] {
     return this.data;
   }
 
@@ -16,7 +16,17 @@ export class MockDraftPage {
     this.data = this.parsePage(response.data);
   }
 
-  public async loadChildren(): Promise<void> {
+  public removeMockDraftsBeforeDate(thresholdDate: Date): void {
+    if (this.data) {
+      let newData: MockDraft[] = [];
+      this.data.forEach((mockDraft) => {
+        if (mockDraft.date > thresholdDate) newData.push(mockDraft);
+      });
+      this.data = newData;
+    }
+  }
+
+  public async loadMockDrafts(): Promise<void> {
     if (!this.data) return;
     let promises: Promise<void>[] = [];
     this.data.forEach((mockDraft) => {
@@ -27,13 +37,14 @@ export class MockDraftPage {
 
   private parsePage(content: string): MockDraft[] {
     function parseListItem(head: HTMLElement): MockDraft | null {
+      let name = head.querySelector('.site-link')?.innerText;
       let link = head.querySelector('.link-container')?.getAttribute('href');
       let siteTimestamp = head.querySelector('.site-timestamp')?.innerText;
-      if (siteTimestamp && link) {
+      if (name && siteTimestamp && link) {
         let splitTimestamp = siteTimestamp.split('/');
         splitTimestamp[2] = `20${splitTimestamp[2]}`;
         let modifiedTimestamp = splitTimestamp.join('/');
-        return new MockDraft(link, new Date(modifiedTimestamp));
+        return new MockDraft(name, link, new Date(modifiedTimestamp));
       }
       return null;
     }

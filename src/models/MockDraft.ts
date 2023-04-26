@@ -1,11 +1,18 @@
 import axios from 'axios';
 import { parse } from 'node-html-parser';
-import { Constants } from '../../util/Constants';
+import { Constants } from '../util/Constants';
 
 export class MockDraft {
   private data: string[] = [];
 
-  constructor(public endpoint: string, public date: Date) {}
+  constructor(
+    public name: string,
+    public endpoint: string,
+    public date: Date,
+    data: string[] | null = null
+  ) {
+    if (data) this.data = data;
+  }
 
   public getData(): string[] {
     return this.data;
@@ -13,8 +20,9 @@ export class MockDraft {
 
   // "Pretty prints" the MockDraft
   public pp(): void {
+    console.log(`${this.name}: ${this.date}`);
     this.data.forEach((element, idx) => {
-      console.log(`${idx + 1}: ${element}`);
+      console.log(`   ${idx + 1}: ${element}`);
     });
   }
 

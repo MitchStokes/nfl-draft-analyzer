@@ -26,6 +26,16 @@ export class MockDraftPage {
     }
   }
 
+  public removeMockDraftsBelowPickQuantity(pickQuantity: number) {
+    if (this.data) {
+      let newData: MockDraft[] = [];
+      this.data.forEach((mockDraft) => {
+        if (mockDraft.getData().length >= pickQuantity) newData.push(mockDraft);
+      });
+      this.data = newData;
+    }
+  }
+
   public async loadMockDrafts(): Promise<void> {
     if (!this.data) return;
     let promises: Promise<void>[] = [];

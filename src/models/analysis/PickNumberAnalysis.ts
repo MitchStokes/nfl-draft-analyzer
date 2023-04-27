@@ -1,19 +1,11 @@
 import { OddsConversion } from '../../util/OddsConversion';
 import { MockDraftAggregator } from '../MockDraftAggregator';
 import { PickNumberOdds } from '../odds/PickNumberOdds';
+import { BetAnalysis } from './BetAnalysis';
 
 type PickSlot = {
   [key: string]: number;
   total: number;
-};
-
-type BetAnalysis = {
-  name: string;
-  marketOdds: number;
-  marketImpliedOdds: number;
-  fairOdds: number;
-  fairImpliedOdds: number;
-  ev: number;
 };
 
 export class PickNumberAnalysis {
@@ -24,9 +16,8 @@ export class PickNumberAnalysis {
     this.odds = new PickNumberOdds();
   }
 
-  public run(): void {
+  public run(): BetAnalysis[] {
     this.generatePickSlots();
-
     let betAnalysis: BetAnalysis[] = [];
     this.odds.getOdds().forEach((offer, idx) => {
       offer.outcomes.forEach((outcome) => {
@@ -55,8 +46,7 @@ export class PickNumberAnalysis {
       });
     });
 
-    betAnalysis.sort((a, b) => b.ev - a.ev);
-    console.log(betAnalysis);
+    return betAnalysis;
   }
 
   private generatePickSlots(): void {

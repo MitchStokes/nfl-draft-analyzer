@@ -7,6 +7,7 @@ export class MockDraft {
 
   constructor(
     public name: string,
+    public year: number,
     public endpoint: string,
     public date: Date,
     data: string[] | null = null
@@ -27,8 +28,14 @@ export class MockDraft {
   }
 
   public async load(): Promise<void> {
-    let response = await axios.get(Constants.buildUrl(this.endpoint));
-    this.data = this.parsePage(response.data);
+    let url = Constants.buildUrl(this.endpoint, this.year);
+    try {
+      let response = await axios.get(url);
+      this.data = this.parsePage(response.data);
+    } catch (e) {
+      console.log(`Error occurred requesting URL ${url}`);
+      this.data = [];
+    }
   }
 
   private parsePage(content: string): string[] {
@@ -36,8 +43,9 @@ export class MockDraft {
     if (list) {
       const playerNames: string[] = [];
       list.querySelectorAll('.mock-list-item').forEach((element) => {
-        const playerName =
-          element.querySelector('.player-name')?.childNodes[0].innerText;
+        const playerName = element
+          .querySelector('.player-name')
+          ?.querySelector('a')?.innerText;
         if (playerName) playerNames.push(playerName);
       });
       return playerNames;

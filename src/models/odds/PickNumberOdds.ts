@@ -13,8 +13,8 @@ type Outcome = {
 export class PickNumberOdds {
   private odds: Offer[] = [];
 
-  constructor() {
-    const fileReader = new FileInput('res/odds/pickNumber.json');
+  constructor(year: number) {
+    const fileReader = new FileInput(`res/odds/${year}/pickNumber.json`);
     const content = fileReader.read();
     let parsed = JSON.parse(content);
     let offers =

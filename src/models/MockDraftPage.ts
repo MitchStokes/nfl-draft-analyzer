@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { parse, HTMLElement } from 'node-html-parser';
 import { MockDraft } from './MockDraft';
+import { Constants } from '../util/Constants';
 
 export class MockDraftPage {
   private data: MockDraft[] = [];
 
-  constructor(public endpoint: string) {}
+  constructor(public year: number, public endpoint: string) {}
 
   public getMockDrafts(): MockDraft[] {
     return this.data;
@@ -46,15 +47,23 @@ export class MockDraftPage {
   }
 
   private parsePage(content: string): MockDraft[] {
+    const year = this.year;
+
     function parseListItem(head: HTMLElement): MockDraft | null {
       let name = head.querySelector('.site-link')?.innerText;
       let link = head.querySelector('.link-container')?.getAttribute('href');
       let siteTimestamp = head.querySelector('.site-timestamp')?.innerText;
       if (name && siteTimestamp && link) {
+        let splitLink = link.split('/');
         let splitTimestamp = siteTimestamp.split('/');
         splitTimestamp[2] = `20${splitTimestamp[2]}`;
         let modifiedTimestamp = splitTimestamp.join('/');
-        return new MockDraft(name, link, new Date(modifiedTimestamp));
+        return new MockDraft(
+          name,
+          year,
+          '/' + splitLink[splitLink.length - 1],
+          new Date(modifiedTimestamp)
+        );
       }
       return null;
     }
@@ -63,6 +72,7 @@ export class MockDraftPage {
     if (list) {
       let out: MockDraft[] = [];
       list.querySelectorAll('li').forEach((listItem: HTMLElement) => {
+        if (listItem.innerText.includes('MOST ACCURATE')) return;
         let parseResult = parseListItem(listItem);
         if (parseResult) out.push(parseResult);
       });

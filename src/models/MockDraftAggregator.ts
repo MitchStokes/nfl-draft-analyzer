@@ -21,37 +21,42 @@ export class MockDraftAggregator {
   }
 
   public async aggregateFromWeb(
+    year: number,
     thresholdDate: Date,
-    pickQuantityNeeded: number
+    pickQuantityNeeded: number,
+    initialPage?: number
   ): Promise<void> {
     function sleep(ms: number) {
       return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
-    let pageCounter = 1;
+    let pageCounter = initialPage || 1;
     let shouldContinue = true;
 
     while (shouldContinue) {
       console.log(`Checking page ${pageCounter}...`);
       let curPage = new MockDraftPage(
-        Constants.buildUrl(`/page/${pageCounter}`)
+        year,
+        Constants.buildUrl(`/page/${pageCounter}`, year)
       );
       await curPage.load();
 
       let lenBeforeRemovals = curPage.getMockDrafts().length;
       curPage.removeMockDraftsBeforeDate(thresholdDate);
       let lenAfterRemovals = curPage.getMockDrafts().length;
-      console.log(`${lenAfterRemovals} mock drafts found after threshold date`);
+      console.log(
+        `${lenAfterRemovals} mock drafts from after threshold date found on this page`
+      );
 
       await curPage.loadMockDrafts();
 
-      lenBeforeRemovals = curPage.getMockDrafts().length;
+      let lenBeforeRemovals2 = curPage.getMockDrafts().length;
       curPage.removeMockDraftsBelowPickQuantity(pickQuantityNeeded);
-      lenAfterRemovals = curPage.getMockDrafts().length;
+      let lenAfterRemovals2 = curPage.getMockDrafts().length;
       console.log(
         `${
-          lenBeforeRemovals - lenAfterRemovals
-        } pick-deficient mock drafts found`
+          lenBeforeRemovals2 - lenAfterRemovals2
+        } pick-deficient mock drafts ignored`
       );
 
       this.mockDrafts = this.mockDrafts.concat(curPage.getMockDrafts());
@@ -60,19 +65,26 @@ export class MockDraftAggregator {
         shouldContinue = false;
       }
 
-      const delay = 30;
-      console.log(`Waiting ${delay} seconds to avoid rate limit`);
-      await sleep(delay * 1000);
+      if (shouldContinue) {
+        const delay = 30;
+        console.log(`Waiting ${delay} seconds to avoid rate limit`);
+        await sleep(delay * 1000);
+      }
     }
   }
 
-  public aggregateFromJson(fileName: string, pickQuantityNeeded: number): void {
+  public aggregateFromJson(
+    year: number,
+    fileName: string,
+    pickQuantityNeeded: number
+  ): void {
     let fullPath = `out/${fileName}.json`;
     let reader = new FileInput(fullPath);
     let content = reader.read();
     JSON.parse(content).forEach((mockDraft: JSONMockDraft) => {
       let mockDraftToAdd = new MockDraft(
         mockDraft.name,
+        year,
         mockDraft.endpoint,
         new Date(mockDraft.date),
         mockDraft.data

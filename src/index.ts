@@ -9,27 +9,48 @@ import { DraftPositionOUAnalysis } from './models/analysis/DraftPositionOUAnalys
 import { BetAnalysis } from './models/analysis/BetAnalysis';
 
 async function main(): Promise<void> {
+  console.log(runAnalysis('4-18-23_4-26-23', 2023, 31));
+  // downloadMockDrafts(2022, '04/20/22', 32, '4-21-22_4-27-22', 3);
+}
+
+// Run a full analysis on the given params
+function runAnalysis(
+  mockDraftsFile: string,
+  year: number,
+  numPicks: number
+): string {
   const aggregator = new MockDraftAggregator();
-  aggregator.aggregateFromJson('4-12-23_4-26-23', 31);
+  aggregator.aggregateFromJson(year, mockDraftsFile, numPicks);
 
   let bets: BetAnalysis[] = [];
 
-  const pickNumberAnalysis = new PickNumberAnalysis(aggregator);
+  const pickNumberAnalysis = new PickNumberAnalysis(aggregator, year);
   bets = bets.concat(pickNumberAnalysis.run());
 
-  const draftPositionOUAnalysis = new DraftPositionOUAnalysis(aggregator);
+  const draftPositionOUAnalysis = new DraftPositionOUAnalysis(aggregator, year);
   bets = bets.concat(draftPositionOUAnalysis.run());
 
   bets.sort((a, b) => b.ev - a.ev);
   let filteredBets = bets.filter((cur) => cur.ev >= 0.25);
-  getBetAmounts(filteredBets, 100);
+  return getBetAmounts(filteredBets, 100);
 }
 
 // Change date and filename to match whatever parameters you're using
-async function downloadMockDrafts(): Promise<void> {
+async function downloadMockDrafts(
+  year: number,
+  dateCutoff: string,
+  pickQuantity: number,
+  filename: string,
+  initialPage?: number
+): Promise<void> {
   const aggregator = new MockDraftAggregator();
-  await aggregator.aggregateFromWeb(new Date('04/11/23'), 31);
-  aggregator.writeToJson('4-12-23_4-26-23');
+  await aggregator.aggregateFromWeb(
+    year,
+    new Date(dateCutoff),
+    pickQuantity,
+    initialPage
+  );
+  aggregator.writeToJson(filename);
 }
 
 /*
@@ -69,15 +90,20 @@ function getBetAmounts(filteredBets: BetAnalysis[], totalBetAmount: number) {
       betAmounts[idx],
       betAmounts[idx] / bet.marketImpliedOdds,
       bet.marketOdds,
+      bet.marketImpliedOdds,
+      bet.fairOdds,
+      bet.fairImpliedOdds,
       bet.ev,
       payoutProportions[idx],
     ];
     betAmountsAndPayouts.push(out);
   });
 
+  let outString = '';
   betAmountsAndPayouts.forEach((line) => {
-    console.log(line.join(','));
+    outString += line.join(',') + '\n';
   });
+  return outString;
 }
 
 main();

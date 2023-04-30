@@ -1,11 +1,11 @@
-[
+let picks = [
   {
     name: 'Paris Johnson Jr. to be selected OVER 9.5',
     marketOdds: 300,
     marketImpliedOdds: 0.25,
     fairOdds: -109.44881889763782,
     fairImpliedOdds: 0.5225563909774437,
-    ev: 1.0902255639097747
+    ev: 1.0902255639097747,
   },
   {
     name: 'C.J. Stroud to be selected 2 overall',
@@ -13,7 +13,7 @@
     marketImpliedOdds: 0.18181818181818182,
     fairOdds: 167.6767676767677,
     fairImpliedOdds: 0.37358490566037733,
-    ev: 1.054716981132075
+    ev: 1.054716981132075,
   },
   {
     name: 'Dalton Kincaid to be selected OVER 24.5',
@@ -21,7 +21,7 @@
     marketImpliedOdds: 0.3125,
     fairOdds: -144.0366972477064,
     fairImpliedOdds: 0.5902255639097744,
-    ev: 0.8887218045112784
+    ev: 0.8887218045112784,
   },
   {
     name: 'Myles Murphy to be selected UNDER 18.5',
@@ -29,7 +29,7 @@
     marketImpliedOdds: 0.3508771929824561,
     fairOdds: -189.1304347826087,
     fairImpliedOdds: 0.6541353383458647,
-    ev: 0.8642857142857144
+    ev: 0.8642857142857144,
   },
   {
     name: 'Anthony Richardson to be selected 3 overall',
@@ -37,7 +37,7 @@
     marketImpliedOdds: 0.09090909090909091,
     fairOdds: 579.4871794871794,
     fairImpliedOdds: 0.1471698113207547,
-    ev: 0.6188679245283017
+    ev: 0.6188679245283017,
   },
   {
     name: 'Jaxon Smith-Njigba to be selected UNDER 12.5',
@@ -45,7 +45,7 @@
     marketImpliedOdds: 0.2857142857142857,
     fairOdds: 119.83471074380164,
     fairImpliedOdds: 0.4548872180451128,
-    ev: 0.5921052631578948
+    ev: 0.5921052631578948,
   },
   {
     name: 'C.J. Stroud to be selected 1 overall',
@@ -53,7 +53,7 @@
     marketImpliedOdds: 0.07692307692307693,
     fairOdds: 728.125,
     fairImpliedOdds: 0.12075471698113208,
-    ev: 0.5698113207547171
+    ev: 0.5698113207547171,
   },
   {
     name: 'Broderick Jones to be selected UNDER 14.5',
@@ -61,7 +61,7 @@
     marketImpliedOdds: 0.3448275862068966,
     fairOdds: -114.51612903225808,
     fairImpliedOdds: 0.5338345864661654,
-    ev: 0.5481203007518797
+    ev: 0.5481203007518797,
   },
   {
     name: 'Jaxon Smith-Njigba to be selected 8 overall',
@@ -69,7 +69,7 @@
     marketImpliedOdds: 0.0196078431372549,
     fairOdds: 3212.5,
     fairImpliedOdds: 0.03018867924528302,
-    ev: 0.5396226415094341
+    ev: 0.5396226415094341,
   },
   {
     name: 'Hendon Hooker to be selected OVER 31.5',
@@ -77,7 +77,7 @@
     marketImpliedOdds: 0.4,
     fairOdds: -150.94339622641508,
     fairImpliedOdds: 0.6015037593984962,
-    ev: 0.5037593984962404
+    ev: 0.5037593984962404,
   },
   {
     name: 'Nolan Smith to be selected UNDER 10.5',
@@ -85,7 +85,7 @@
     marketImpliedOdds: 0.47619047619047616,
     fairOdds: -232.49999999999997,
     fairImpliedOdds: 0.6992481203007519,
-    ev: 0.46842105263157907
+    ev: 0.46842105263157907,
   },
   {
     name: 'Anthony Richardson to be selected 4 overall',
@@ -93,7 +93,7 @@
     marketImpliedOdds: 0.22727272727272727,
     fairOdds: 223.1707317073171,
     fairImpliedOdds: 0.30943396226415093,
-    ev: 0.361509433962264
+    ev: 0.361509433962264,
   },
   {
     name: 'Tyree Wilson to be selected 8 overall',
@@ -101,7 +101,7 @@
     marketImpliedOdds: 0.13333333333333333,
     fairOdds: 463.8297872340426,
     fairImpliedOdds: 0.17735849056603772,
-    ev: 0.33018867924528283
+    ev: 0.33018867924528283,
   },
   {
     name: 'Peter Skoronski to be selected 9 overall',
@@ -109,7 +109,7 @@
     marketImpliedOdds: 0.20833333333333334,
     fairOdds: 268.0555555555556,
     fairImpliedOdds: 0.27169811320754716,
-    ev: 0.3041509433962264
+    ev: 0.3041509433962264,
   },
   {
     name: 'Anthony Richardson to be selected 2 overall',
@@ -117,7 +117,7 @@
     marketImpliedOdds: 0.03225806451612903,
     fairOdds: 2309.0909090909095,
     fairImpliedOdds: 0.04150943396226415,
-    ev: 0.2867924528301886
+    ev: 0.2867924528301886,
   },
   {
     name: 'Christian Gonzalez to be selected 7 overall',
@@ -125,7 +125,7 @@
     marketImpliedOdds: 0.2222222222222222,
     fairOdds: 258.1081081081081,
     fairImpliedOdds: 0.2792452830188679,
-    ev: 0.2566037735849057
+    ev: 0.2566037735849057,
   },
   {
     name: 'Devon Witherspoon to be selected OVER 6.5',
@@ -133,7 +133,7 @@
     marketImpliedOdds: 0.45454545454545453,
     fairOdds: -127.35042735042735,
     fairImpliedOdds: 0.5601503759398496,
-    ev: 0.23233082706766917
+    ev: 0.23233082706766917,
   },
   {
     name: 'Tyree Wilson to be selected 5 overall',
@@ -141,7 +141,7 @@
     marketImpliedOdds: 0.20833333333333334,
     fairOdds: 289.70588235294116,
     fairImpliedOdds: 0.25660377358490566,
-    ev: 0.23169811320754707
+    ev: 0.23169811320754707,
   },
   {
     name: 'Deonte Banks to be selected OVER 20.5',
@@ -149,7 +149,7 @@
     marketImpliedOdds: 0.5,
     fairOdds: -153.33333333333334,
     fairImpliedOdds: 0.6052631578947368,
-    ev: 0.21052631578947367
+    ev: 0.21052631578947367,
   },
   {
     name: 'Jalen Carter to be selected OVER 6.5',
@@ -157,7 +157,7 @@
     marketImpliedOdds: 0.2564102564102564,
     fairOdds: 228.39506172839506,
     fairImpliedOdds: 0.30451127819548873,
-    ev: 0.1875939849624062
+    ev: 0.1875939849624062,
   },
   {
     name: 'Nolan Smith to be selected OVER 10.5',
@@ -165,7 +165,7 @@
     marketImpliedOdds: 0.6,
     fairOdds: -232.49999999999997,
     fairImpliedOdds: 0.6992481203007519,
-    ev: 0.16541353383458657
+    ev: 0.16541353383458657,
   },
   {
     name: 'Bijan Robinson to be selected 10 overall',
@@ -173,6 +173,6 @@
     marketImpliedOdds: 0.13333333333333333,
     fairOdds: 562.5,
     fairImpliedOdds: 0.1509433962264151,
-    ev: 0.13207547169811318
-  }
-]
+    ev: 0.13207547169811318,
+  },
+];

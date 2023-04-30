@@ -11,8 +11,8 @@ export class DraftPositionOUAnalysis {
   public odds: DraftPositionOUOdds;
   private playerSlots: PlayerSlots = {};
 
-  constructor(public aggregator: MockDraftAggregator) {
-    this.odds = new DraftPositionOUOdds();
+  constructor(public aggregator: MockDraftAggregator, year: number) {
+    this.odds = new DraftPositionOUOdds(year);
   }
 
   public run(): BetAnalysis[] {
@@ -48,10 +48,8 @@ export class DraftPositionOUAnalysis {
       // Under logic
       marketOdds = offer.underOdds as number;
       marketImpliedOdds = OddsConversion.americanToImplied(marketOdds);
-      fairImpliedOdds = this.getRatioOfPlayerOverThresh(
-        playerName,
-        offer.thresh as number
-      );
+      fairImpliedOdds =
+        1 - this.getRatioOfPlayerOverThresh(playerName, offer.thresh as number);
       fairOdds = OddsConversion.impliedToAmerican(fairImpliedOdds);
       ev =
         fairImpliedOdds -

@@ -12,8 +12,8 @@ export class PickNumberAnalysis {
   public odds: PickNumberOdds;
   private pickSlots: PickSlot[] = [];
 
-  constructor(public aggregator: MockDraftAggregator) {
-    this.odds = new PickNumberOdds();
+  constructor(public aggregator: MockDraftAggregator, year: number) {
+    this.odds = new PickNumberOdds(year);
   }
 
   public run(): BetAnalysis[] {

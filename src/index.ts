@@ -9,8 +9,8 @@ import { DraftPositionOUAnalysis } from './models/analysis/DraftPositionOUAnalys
 import { BetAnalysis } from './models/analysis/BetAnalysis';
 
 async function main(): Promise<void> {
-  console.log(runAnalysis('4-18-23_4-26-23', 2023, 31));
-  // downloadMockDrafts(2022, '04/20/22', 32, '4-21-22_4-27-22', 3);
+  console.log(runAnalysis('4-21-21_4-29-21', 2021, 32));
+  // downloadMockDrafts(2021, '04/20/21', 32, '4-21-21_4-29-21', 1);
 }
 
 // Run a full analysis on the given params
